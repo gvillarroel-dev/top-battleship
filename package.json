@@ -1,0 +1,36 @@
+{
+	"name": "top-battleship",
+	"version": "1.0.0",
+	"description": "Este proyecto es una implementación del clásico juego \"Batalla Naval\" desarrollado en **JavaScript moderno (ES6+)**, siguiendo la metodología **TDD (Test-Driven Development)**",
+	"main": "index.js",
+	"scripts": {
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"build": "webpack",
+		"start": "webpack serve"
+	},
+	"jest": {
+		"testEnvironment": "node"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gvillarroel-dev/top-battleship.git"
+	},
+	"keywords": [],
+	"author": "Villarroel Giuliana",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/gvillarroel-dev/top-battleship/issues"
+	},
+	"homepage": "https://github.com/gvillarroel-dev/top-battleship#readme",
+	"devDependencies": {
+		"@babel/core": "^7.29.0",
+		"@babel/preset-env": "^7.29.2",
+		"babel-jest": "^30.3.0",
+		"html-webpack-plugin": "^5.6.6",
+		"jest": "^30.3.0",
+		"webpack": "^5.105.4",
+		"webpack-cli": "^7.0.2",
+		"webpack-dev-server": "^5.2.3"
+	}
+}
