@@ -35,7 +35,7 @@ export const renderBoard = (board, container) => {
 	}
 };
 
-export const showShipPlacement = (player) => {
+export const showShipPlacement = (player, container) => {
 	const controls = document.querySelector(".ship-placement");
 	const game = document.querySelector(".game");
 	const modeGame = document.querySelector(".mode-select");
@@ -44,6 +44,7 @@ export const showShipPlacement = (player) => {
 	toggleVisibility(game, true);
 	toggleVisibility(modeGame, false);
 
-	const board = document.querySelector(".game__board-p1");
-	renderBoard(player.board, board);
+	renderBoard(player.board, container);
 };
+
+export const showGame = () => {};
