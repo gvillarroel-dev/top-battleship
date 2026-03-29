@@ -30,6 +30,7 @@ export const Gameboard = () => {
 			attacks.push([row, col]);
 		} else {
 			misses.push([row, col]);
+			attacks.push([row, col]);
 		}
 	};
 
