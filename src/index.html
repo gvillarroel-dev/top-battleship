@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Battleship</title>
+	</head>
+	<body>
+        <header class="app__header">
+            <h1 class="header__title">THEBattleship</h1>
+        </header>
+		<main class="app">
+			<section class="mode-select">
+				<button class="mode__btn--single" aria-label="singleplayer game mode">Singleplayer</button>
+				<button class="mode__btn--multiplayer" aria-label="multiplayer game mode">Multiplayer</button>
+			</section>
+
+			<div class="modal" hidden aria-hidden="true">
+				<h2 class="modal__winner"></h2>
+				<button class="modal__btn--reset">Reset game</button>
+			</div>
+			
+            <section class="game" hidden aria-hidden="true">
+				<div class="game__board-p1"></div>
+				<div class="game__board-p2"></div>
+			</section>
+			
+            <section class="pass-device" hidden aria-hidden="true">
+                <p class="pass-device__text">Pass the device to the next player</p>
+				<button class="pass-device__btn">Next Player</button>
+			</section>
+			
+            <section class="ship-placement" hidden aria-hidden="true">
+				<h2 class="ship-placement__heading">Place your ships</h2>
+                <div class="ship-controls__btn">
+					<button class="controls__btn" aria-label="place a carrier" data-size="5">Carrier</button>
+				</div>
+				<div class="ship-controls__btn">
+					<button class="controls__btn" aria-label="place a battleship" data-size="4">Battleship</button>
+				</div>
+				<div class="ship-controls__btn">
+					<button class="controls__btn" aria-label="place a submarine" data-size="3">Submarine</button>
+				</div>
+				<div class="ship-controls__btn">
+					<button class="controls__btn" aria-label="place a destroyer" data-size="2">Destroyer</button>
+				</div>
+				<div class="ship-controls__btn">
+					<button class="controls__btn--orientation" aria-label="change orientation of ship placement">
+						Change Orientation
+					</button>
+				</div>
+				<div class="ship-controls__btn">
+					<button class="controls__btn--start" aria-label="start game">Start Game</button>
+				</div>
+			</section>
+		</main>
+		<footer class="app__footer">
+			<p class="footer__text">
+				Coded and Designed by
+				<a
+					href="https://github.com/gvillarroel-dev"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="footer__link"
+					>Villarroel Giuliana</a
+				>
+				| A project from
+				<a
+					href="https://www.theodinproject.com"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="footer__link"
+					>The Odin Project</a
+				>
+			</p>
+		</footer>
+	</body>
+</html>
