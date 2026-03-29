@@ -2,6 +2,7 @@ const modeSelect = document.querySelector(".mode-select");
 const shipPlacement = document.querySelector(".ship-placement");
 const modal = document.querySelector(".modal");
 const game = document.querySelector(".game");
+const passDevice = document.querySelector(".pass-device");
 const boardP1 = document.querySelector(".game__board-p1");
 const boardP2 = document.querySelector(".game__board-p2");
 
@@ -50,4 +51,12 @@ export const showGame = (player1, player2) => {
 
 	renderBoard(player1.board, boardP1);
 	renderBoard(player2.board, boardP2);
+};
+
+export const showPassDevice = (player) => {
+	toggleVisibility(game, false);
+	toggleVisibility(passDevice, true);
+
+	const passDeviceText = passDevice.querySelector(".pass-device__text");
+	passDeviceText.textContent = `Pass the device to ${player.name}`;
 };
