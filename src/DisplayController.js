@@ -34,3 +34,16 @@ export const renderBoard = (board, container) => {
 		}
 	}
 };
+
+export const showShipPlacement = (player) => {
+	const controls = document.querySelector(".ship-placement");
+	const game = document.querySelector(".game");
+	const modeGame = document.querySelector(".mode-select");
+
+	toggleVisibility(controls, true);
+	toggleVisibility(game, true);
+	toggleVisibility(modeGame, false);
+
+	const board = document.querySelector(".game__board-p1");
+	renderBoard(player.board, board);
+};
