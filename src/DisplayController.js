@@ -1,3 +1,10 @@
+const modeSelect = document.querySelector(".mode-select");
+const shipPlacement = document.querySelector(".ship-placement");
+const modal = document.querySelector(".modal");
+const game = document.querySelector(".game");
+const boardP1 = document.querySelector(".game__board-p1");
+const boardP2 = document.querySelector(".game__board-p2");
+
 const toggleVisibility = (element, visible) => {
 	element.hidden = !visible;
 	element.setAttribute("aria-hidden", String(!visible));
@@ -8,19 +15,12 @@ const resetBoard = (board) => {
 };
 
 export const initDisplay = () => {
-	const modal = document.querySelector(".modal");
-	const boards = document.querySelector(".game");
-	const controls = document.querySelector(".ship-placement");
-	const modeElement = document.querySelector(".mode-select");
-	const boardP1 = document.querySelector(".game__board-p1");
-	const boardP2 = document.querySelector(".game__board-p2");
-
 	resetBoard(boardP1);
 	resetBoard(boardP2);
 	toggleVisibility(modal, false);
-	toggleVisibility(boards, false);
-	toggleVisibility(controls, false);
-	toggleVisibility(modeElement, true);
+	toggleVisibility(game, false);
+	toggleVisibility(shipPlacement, false);
+	toggleVisibility(modeSelect, true);
 };
 
 export const renderBoard = (board, container) => {
@@ -36,15 +36,18 @@ export const renderBoard = (board, container) => {
 };
 
 export const showShipPlacement = (player, container) => {
-	const controls = document.querySelector(".ship-placement");
-	const game = document.querySelector(".game");
-	const modeGame = document.querySelector(".mode-select");
-
-	toggleVisibility(controls, true);
+	toggleVisibility(shipPlacement, true);
 	toggleVisibility(game, true);
-	toggleVisibility(modeGame, false);
+	toggleVisibility(modeSelect, false);
 
 	renderBoard(player.board, container);
 };
 
-export const showGame = () => {};
+export const showGame = (player1, player2) => {
+	toggleVisibility(modeSelect, false);
+	toggleVisibility(shipPlacement, false);
+	toggleVisibility(game, true);
+
+	renderBoard(player1.board, boardP1);
+	renderBoard(player2.board, boardP2);
+};
