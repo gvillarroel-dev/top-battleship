@@ -1,6 +1,6 @@
 import { Gameboard } from "../src/Gameboard.js";
 
-export const Player = () => {
+export const Player = (name) => {
 	const gameboard = Gameboard();
 
 	const attack = (boardEnemy, x, y) => {
@@ -22,6 +22,7 @@ export const Player = () => {
 	};
 
 	return {
+		name,
 		board: gameboard,
 		attack,
 		randomAttack,

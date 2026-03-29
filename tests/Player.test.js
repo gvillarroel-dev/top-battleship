@@ -2,16 +2,21 @@ import { Player } from "../src/Player.js";
 import { Ship } from "../src/Ship.js";
 
 describe("Player", () => {
+	test("start with a name", () => {
+		const player = Player("Player 1");
+		expect(player.name).toBe("Player 1");
+	});
+
 	test("Start with a clean dashboard", () => {
-		const player = Player();
+		const player = Player("Player 1");
 		expect(player.board.board).toEqual(
 			Array.from({ length: 10 }, () => Array(10).fill(null)),
 		);
 	});
 
 	test("attack() produces an attack on the enemy board at a defined coordinate", () => {
-		const player1 = Player();
-		const player2 = Player();
+		const player1 = Player("Player 1");
+		const player2 = Player("Player 2");
 		const ship = Ship(1);
 
 		player2.board.placeShip(ship, [[0, 0]]);
@@ -21,8 +26,8 @@ describe("Player", () => {
 	});
 
 	test("attack() return the coordinates of miss an hit", () => {
-		const player1 = Player();
-		const player2 = Player();
+		const player1 = Player("Player 1");
+		const player2 = Player("Player 2");
 		const ship = Ship(1);
 
 		player2.board.placeShip(ship, [[0, 1]]);
@@ -31,8 +36,8 @@ describe("Player", () => {
 	});
 
 	test("randomAttack() perform an attack on a valid coordinate and that it does not repeat coordinates already attacked", () => {
-		const player1 = Player();
-		const player2 = Player();
+		const player1 = Player("Player 1");
+		const player2 = Player("Player 2");
 
 		player1.randomAttack(player2.board);
 		const [row, col] = player2.board.misses[0];
@@ -44,8 +49,8 @@ describe("Player", () => {
 	});
 
 	test("randomAttack() throws an error when attempting to repeat an attack on an already attacked coordinate", () => {
-		const player1 = Player();
-		const player2 = Player();
+		const player1 = Player("Player 1");
+		const player2 = Player("Player 2");
 
 		for (let i = 0; i < 10; i++) {
 			for (let j = 0; j < 10; j++) {
