@@ -22,3 +22,15 @@ export const initDisplay = () => {
 	toggleVisibility(controls, false);
 	toggleVisibility(modeElement, true);
 };
+
+export const renderBoard = (board, container) => {
+	for (let i = 0; i < board.length; i++) {
+		for (let j = 0; j < board.length; j++) {
+			const div = document.createElement("div");
+			div.classList.add("board__cell");
+			div.setAttribute("data-value", [i, j]);
+
+			container.appendChild(div);
+		}
+	}
+};
