@@ -60,3 +60,10 @@ export const showPassDevice = (player) => {
 	const passDeviceText = passDevice.querySelector(".pass-device__text");
 	passDeviceText.textContent = `Pass the device to ${player.name}`;
 };
+
+export const showModal = (winner) => {
+	toggleVisibility(modal, true);
+
+	const modalText = modal.querySelector(".modal__winner");
+	modalText.textContent = `${winner} won`;
+};
