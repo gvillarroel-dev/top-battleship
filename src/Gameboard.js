@@ -2,6 +2,7 @@ export const Gameboard = () => {
 	const board = Array.from({ length: 10 }, () => Array(10).fill(null));
 	const misses = [];
 	const ships = [];
+	const attacks = [];
 
 	const isEmpty = (coordinates) => {
 		for (let [row, col] of coordinates) {
@@ -26,6 +27,7 @@ export const Gameboard = () => {
 		const cell = board[row][col];
 		if (cell !== null) {
 			cell.hit();
+			attacks.push([row, col]);
 		} else {
 			misses.push([row, col]);
 		}
@@ -38,6 +40,7 @@ export const Gameboard = () => {
 	return {
 		board,
 		misses,
+		attacks,
 		placeShip,
 		receiveAttack,
 		allSunk,
