@@ -23,21 +23,25 @@ export const initGameController = () => {
 
 	const handleModeSelection = (event) => {
 		const singlePlayerButton = event.target.closest(".mode__btn--single");
-		const multiPlayerButton = event.target.closest(
-			".mode__btn--multiplayer",
-		);
+		const multiPlayerButton = event.target.closest(".mode__btn--multiplayer");
 
 		if (singlePlayerButton) {
 			selectedGameMode = "singleplayer";
 			setupPlayers(selectedGameMode);
-			showShipPlacement(playerOne, playerOneBoardElement);
 		}
 
 		if (multiPlayerButton) {
 			selectedGameMode = "multiplayer";
 			setupPlayers(selectedGameMode);
-			showShipPlacement(playerOne, playerOneBoardElement);
 		}
+
+		if (selectedGameMode !== null) {
+            showShipPlacement(activePlayer,
+			    activePlayer === playerOne
+                    ? playerOneBoardElement
+                    : playerTwoBoardElement,
+		    );
+        }
 	};
 
 	const initGame = () => {
