@@ -67,3 +67,30 @@ export const showModal = (winner) => {
 	const modalText = modal.querySelector(".modal__winner");
 	modalText.textContent = `${winner} won`;
 };
+
+export const updateBoard = (boardState, boardElement) => {
+	const cells = boardElement.querySelectorAll(".board__cell");
+
+	cells.forEach((cellElement) => {
+		let position = cellElement.dataset.value.split(",");
+
+		let row = Number(position[0]);
+		let col = Number(position[1]);
+
+		let isAttacked = boardState.attacks.some(
+			([attackRow, attackCol]) => attackRow === row && attackCol === col,
+		);
+
+		const cellValue = boardState.board[row][col];
+
+		if (isAttacked && cellValue !== null) {
+			cellElement.classList.add("board__cell--ship-hit");
+		} else if (cellValue !== null && cellValue !== "miss") {
+			cellElement.classList.add("board__cell--ship");
+		} else if (cellValue === "miss") {
+			cellElement.classList.add("board__cell--miss");
+		} else {
+			cellElement.classList.add("board__cell--empty");
+		}
+	});
+};
