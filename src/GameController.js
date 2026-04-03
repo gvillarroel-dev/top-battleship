@@ -60,51 +60,68 @@ export const initGameController = () => {
 		orientation = orientation === "vertical" ? "horizontal" : "vertical";
 	};
 
+	const updateOrientationButton = (button) => {
+		button.textContent = `Change orientation: ${orientation}`;
+	};
+
+	const handleShipSelection = (shipButtons, shipButton) => {
+        shipButtons.forEach((btn) => btn.classList.remove("selected"));
+        
+        selectedShip = Number(shipButton.dataset.size);
+        shipButton.classList.add("selected");
+	};
+
+    const calculateShipCoordinates = (row, col, size, orientation) => {
+        const shipCoordinates = [];
+        for (let i = 0; i < size; i++) {
+            if (orientation === "horizontal") {
+                shipCoordinates.push([row, col + i]);
+            } else {
+                shipCoordinates.push([row + i, col]);
+            }
+        }
+        return shipCoordinates;
+    }
+
+    const placeShipOnBoard = (player, ship, coordinates) => {
+        player.board.placeShip(ship, coordinates);
+    }
+
+    const disableBoardCells = (boardElement, coordinates) => {
+        coordinates.forEach(([row, col]) => {
+            const cell = boardElement.querySelector(`.board__cell[data-value="${row},${col}"]`);
+            if (cell) {
+                cell.classList.add("board__cell--disabled");
+            }
+        })
+    }
+
 	const setupShipPlacement = (boardElement) => {
 		const orientationButton = document.querySelector(".controls__btn--orientation");
 		orientationButton.addEventListener("click", () => {
 			toggleOrientation();
-			orientationButton.textContent = `Change orientation: ${orientation}`;
+			updateOrientationButton(orientationButton);
 		});
 
 		const shipButtons = document.querySelectorAll(".controls__btn--ship");
-
-		shipButtons.forEach((shipButton) => {
+        shipButtons.forEach((shipButton) => {
             shipButton.addEventListener("click", () => {
-				shipButtons.forEach((btn) => btn.classList.remove("selected"));
-				
-                selectedShip = Number(shipButton.dataset.size);
-				shipButton.classList.add("selected");
-			});
-		});
+                handleShipSelection(shipButtons, shipButton);
+            });
+        });
 
 		boardElement.addEventListener("click", (event) => {
 			const cell = event.target.closest(".board__cell");
 			if (!cell || !selectedShip) return;
 
-			let cellCoords = cell.dataset.value.split(",").map(Number);
-			const row = cellCoords[0];
-			const col = cellCoords[1];
+			const [row, col] = cell.dataset.value.split(",").map(Number);
+			let shipCoordinates = calculateShipCoordinates(row, col, selectedShip, orientation);
 
-            let shipCoordinates = [];
-            for (let i = 0; i < selectedShip; i++) {
-                if (orientation === "horizontal") {
-                    shipCoordinates.push([row, col + i]);
-                } else {
-                    shipCoordinates.push([row + i, col]);
-                }
-            }
+			const newShip = Ship(selectedShip);
+			placeShipOnBoard(activePlayer, newShip, shipCoordinates);
+			updateBoard(activePlayer.board, boardElement);
 
-            const newShip = Ship(selectedShip);
-            activePlayer.board.placeShip(newShip, shipCoordinates);
-            updateBoard(activePlayer.board, boardElement);
-
-            shipCoordinates.forEach(([r, c]) => {
-                const cell = boardElement.querySelector(`.board__cell[data-value="${r},${c}"]`);
-                if (cell) {
-                    cell.classList.add("board__cell--disabled");
-                }
-            });
+			disableBoardCells(boardElement, shipCoordinates);
 		});
 	};
 
