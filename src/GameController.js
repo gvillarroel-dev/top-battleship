@@ -1,4 +1,9 @@
-import { showShipPlacement, updateBoard } from "./DisplayController.js";
+import {
+	showGame,
+	showPassDevice,
+	showShipPlacement,
+	updateBoard,
+} from "./DisplayController.js";
 import { Player } from "./Player.js";
 import { Ship } from "./Ship.js";
 
@@ -39,16 +44,18 @@ export const initGameController = () => {
 		}
 
 		if (selectedGameMode !== null) {
-            showShipPlacement(activePlayer,
-			    activePlayer === playerOne
-                    ? playerOneBoardElement
-                    : playerTwoBoardElement,
-		    );
-            setupShipPlacement(activePlayer === playerOne
-                ? playerOneBoardElement
-                : playerTwoBoardElement
-            );
-        }
+			showShipPlacement(
+				activePlayer,
+				activePlayer === playerOne
+					? playerOneBoardElement
+					: playerTwoBoardElement,
+			);
+			setupShipPlacement(
+				activePlayer === playerOne
+					? playerOneBoardElement
+					: playerTwoBoardElement,
+			);
+		}
 	};
 
 	const initGame = () => {
@@ -71,30 +78,30 @@ export const initGameController = () => {
         shipButton.classList.add("selected");
 	};
 
-    const calculateShipCoordinates = (row, col, size, orientation) => {
-        const shipCoordinates = [];
-        for (let i = 0; i < size; i++) {
-            if (orientation === "horizontal") {
-                shipCoordinates.push([row, col + i]);
-            } else {
-                shipCoordinates.push([row + i, col]);
-            }
-        }
-        return shipCoordinates;
-    }
+	const calculateShipCoordinates = (row, col, size, orientation) => {
+		const shipCoordinates = [];
+		for (let i = 0; i < size; i++) {
+			if (orientation === "horizontal") {
+				shipCoordinates.push([row, col + i]);
+			} else {
+				shipCoordinates.push([row + i, col]);
+			}
+		}
+		return shipCoordinates;
+	};
 
-    const placeShipOnBoard = (player, ship, coordinates) => {
-        player.board.placeShip(ship, coordinates);
-    }
+	const placeShipOnBoard = (player, ship, coordinates) => {
+		player.board.placeShip(ship, coordinates);
+	};
 
-    const disableBoardCells = (boardElement, coordinates) => {
-        coordinates.forEach(([row, col]) => {
-            const cell = boardElement.querySelector(`.board__cell[data-value="${row},${col}"]`);
-            if (cell) {
-                cell.classList.add("board__cell--disabled");
-            }
-        })
-    }
+	const disableBoardCells = (boardElement, coordinates) => {
+		coordinates.forEach(([row, col]) => {
+			const cell = boardElement.querySelector(`.board__cell[data-value="${row},${col}"]`);
+			if (cell) {
+				cell.classList.add("board__cell--disabled");
+			}
+		});
+	};
 
 	const setupShipPlacement = (boardElement) => {
 		const orientationButton = document.querySelector(".controls__btn--orientation");
@@ -104,11 +111,11 @@ export const initGameController = () => {
 		});
 
 		const shipButtons = document.querySelectorAll(".controls__btn--ship");
-        shipButtons.forEach((shipButton) => {
-            shipButton.addEventListener("click", () => {
-                handleShipSelection(shipButtons, shipButton);
-            });
-        });
+		shipButtons.forEach((shipButton) => {
+			shipButton.addEventListener("click", () => {
+				handleShipSelection(shipButtons, shipButton);
+			});
+		});
 
 		boardElement.addEventListener("click", (event) => {
 			const cell = event.target.closest(".board__cell");
@@ -125,8 +132,36 @@ export const initGameController = () => {
 		});
 	};
 
+    const setupPassDevice = () => {
+        const nextPlayerButton = document.querySelector(".pass-device__btn");
+        nextPlayerButton.addEventListener("click", () => {
+            setupShipPlacement(playerTwoBoardElement);
+            showShipPlacement(playerTwo, playerTwoBoardElement);
+            activePlayer = playerTwo;
+        });
+    }
+
+	const startGame = () => {
+		const startButton = document.querySelector(".controls__btn--start");
+		startButton.addEventListener("click", () => {
+			if (selectedGameMode === "singleplayer") {
+				if (activePlayer === playerOne) {
+					showGame(playerOne, playerTwo);
+				}
+			} else {
+				if (activePlayer === playerOne) {
+					showPassDevice(playerTwo);
+                    setupPassDevice();
+				} else {
+					showGame(playerOne, playerTwo);
+				}
+			}
+		});
+	};
+
 	return {
 		initGame,
 		setupShipPlacement,
+        startGame,
 	};
 };
